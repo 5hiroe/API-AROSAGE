@@ -73,4 +73,8 @@ export default class UploadService {
 
     return plant
   }
+
+ async test(test) {
+  return test
+ }
 }
