@@ -18,7 +18,6 @@ export function encrypt (password) {
  */
 export function decrypt (password) {
   const bytes = crypto.AES.decrypt(password, process.env.KEY_ENCRYPTION)
-  console.log('bytes: ', bytes)
   return bytes.toString(crypto.enc.Utf8)
 }
 
