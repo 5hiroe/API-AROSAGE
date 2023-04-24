@@ -1,9 +1,9 @@
 import * as express from './express.js'
-import * as mongo from './mongo.js'
+import * as sequelize from './database.js'
 
 export async function configure (app) {
   await express.configure(app)
-  await mongo.configure(app)
+  await sequelize.configure()
 }
 
 export default configure
