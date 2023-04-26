@@ -1,40 +1,40 @@
-import { DataTypes } from 'sequelize';
+import { DataTypes } from 'sequelize'
 
 export default (sequelize) => {
   const Keep = sequelize.define('Keep', {
     keep_id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
-      allowNull: false,
+      allowNull: false
     },
     user_id: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: false
     },
     location_id: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: false
     },
     use_user_id: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: false
     },
     start_date_keep: {
-      type: DataTypes.DATE,
+      type: DataTypes.DATE
     },
     end_date_keep: {
-      type: DataTypes.DATE,
+      type: DataTypes.DATE
     },
     status_keep: {
-      type: DataTypes.STRING(50),
+      type: DataTypes.STRING(50)
     },
     instruction_keep: {
-      type: DataTypes.STRING(255),
-    },
+      type: DataTypes.STRING(255)
+    }
   }, {
     tableName: 'KEEP',
-    timestamps: false,
-  });
+    timestamps: false
+  })
 
-  return Keep;
-};
+  return Keep
+}

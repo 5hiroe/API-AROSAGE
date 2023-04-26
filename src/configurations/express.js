@@ -6,14 +6,14 @@ import authRoutes from '../routes/auth.js'
 import plantRoutes from '../routes/plant.js'
 
 export async function configure (app) {
-    app.use(cors())
-    app.use(express.static('public'))
-    app.use(express.json())
-    app.use(express.urlencoded({ extended: true }))
+  app.use(cors())
+  app.use(express.static('public'))
+  app.use(express.json())
+  app.use(express.urlencoded({ extended: true }))
 
-    app.use('/', authRoutes)
-    app.use('/plant', plantRoutes)
+  app.use('/', authRoutes)
+  app.use('/plant', plantRoutes)
 
-    app.use(errorHandler)
-    console.log('Express Initialized.')
+  app.use(errorHandler)
+  console.log('Express Initialized.')
 }

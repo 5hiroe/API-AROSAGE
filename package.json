@@ -33,5 +33,13 @@
     "sequelize": "^6.31.0",
     "twilio": "^4.10.0",
     "validator": "^13.9.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.26.0",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-n": "^15.4.0",
+    "eslint-plugin-promise": "^6.1.1",
+    "prettier": "^2.7.1"
   }
 }
