@@ -1,32 +1,32 @@
-import { DataTypes } from 'sequelize';
+import { DataTypes } from 'sequelize'
 
 export default (sequelize) => {
   const Feedback = sequelize.define('Feedback', {
     feedback_id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
-      allowNull: false,
+      allowNull: false
     },
     keep_id: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: false
     },
     date_feedback: {
-      type: DataTypes.DATE,
+      type: DataTypes.DATE
     },
     time_feedback: {
-      type: DataTypes.TIME,
+      type: DataTypes.TIME
     },
     score_feedback: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.INTEGER
     },
     instructions_feedback: {
-      type: DataTypes.STRING(500),
-    },
+      type: DataTypes.STRING(500)
+    }
   }, {
     tableName: 'FEEDBACK',
-    timestamps: false,
-  });
+    timestamps: false
+  })
 
-  return Feedback;
-};
+  return Feedback
+}
