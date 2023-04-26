@@ -11,8 +11,8 @@ export async function handleError (err, req, res, next) {
   const stack = err.stack
   return res.status(500).json({
     message: "La plantation à l'air d'avoir un problème... Nous nous en occupons !",
-    error: err.message,
-    stack: err.stack
+    error,
+    stack
   })
 }
 
