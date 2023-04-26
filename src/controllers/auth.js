@@ -16,3 +16,10 @@ export async function login (req, res) {
   const jwt = await AuthServiceInstance.login({ email, password })
   res.status(200).json({ jwt })
 }
+
+export async function logout (req, res) {
+  const { jwt } = req.body
+  await AuthValidatorInstance.validate(req.body, AuthValidatorInstance.logout)
+  await AuthServiceInstance.logout({ jwt })
+  res.status(200).json({ message: 'Vous êtes déconnecté' })
+}
