@@ -1,11 +1,12 @@
-import { DataTypes } from 'sequelize';
+import { DataTypes, Sequelize } from 'sequelize';
+import { sequelize } from '../configurations/database.js'
 
-export default (sequelize) => {
-  const User = sequelize.define('User', {
+  export const User = sequelize.define('User', {
     user_id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       allowNull: false,
+      autoIncrement: true,
     },
     lastname_user: {
       type: DataTypes.STRING(50),
@@ -33,5 +34,3 @@ export default (sequelize) => {
     timestamps: false,
   });
 
-  return User;
-};
