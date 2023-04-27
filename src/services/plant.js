@@ -39,4 +39,11 @@ export default class PlantService {
     console.log('test', id)
     await Plant.destroy({ where: { plant_id: id } })
   }
+
+  async getAllPlantByUserId ({ id }) {
+    console.log('test', id)
+    const plantList = await Plant.findAll({ where: { user_id: id } })
+    console.log(plantList)
+    return plantList
+  }
 }

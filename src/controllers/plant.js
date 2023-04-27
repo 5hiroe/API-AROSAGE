@@ -37,3 +37,13 @@ export async function deletePlantById (req, res) {
     plant
   })
 }
+
+export async function getAllPlantByUserId (req, res) {
+  const { id } = req.params
+  console.log(id)
+  const plant = await PlantServiceInstance.getAllPlantByUserId({ id })
+  res.status(200).json({
+    message: 'Liste des plantes OK',
+    plant
+  })
+}
