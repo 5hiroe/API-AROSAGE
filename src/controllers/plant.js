@@ -24,7 +24,7 @@ export async function putPlantById (req, res) {
   const fields = req.body
   const plant = await PlantServiceInstance.putPlantById({ fields, id })
   res.status(200).json({
-    message: `La plante à l'id : ${plant.plant_id} a été mise à jour.`,
+    message: 'La plante a été mise à jour.',
     plant
   })
 }
