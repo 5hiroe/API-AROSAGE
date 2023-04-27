@@ -12,7 +12,7 @@ export async function configure (app) {
   app.use(express.urlencoded({ extended: true }))
 
   app.use('/', authRoutes)
-  app.use('/plant', plantRoutes)
+  app.use('/plant/', plantRoutes)
 
   app.use(errorHandler)
   console.log('Express Initialized.')

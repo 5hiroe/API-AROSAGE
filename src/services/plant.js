@@ -16,7 +16,6 @@ export default class PlantService {
   }
 
   async getPlantById (id) {
-    console.log(id)
     const plant = await Plant.findByPk(id)
     if (!plant) {
       throw new NotFound('La plant n\'existe pas.')
@@ -36,14 +35,11 @@ export default class PlantService {
   }
 
   async deletePlantById ({ id }) {
-    console.log('test', id)
     await Plant.destroy({ where: { plant_id: id } })
   }
 
   async getAllPlantByUserId ({ id }) {
-    console.log('test', id)
     const plantList = await Plant.findAll({ where: { user_id: id } })
-    console.log(plantList)
     return plantList
   }
 }
