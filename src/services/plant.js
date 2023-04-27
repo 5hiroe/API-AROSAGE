@@ -36,7 +36,7 @@ export default class PlantService {
   }
 
   async deletePlantById ({ id }) {
-    console.log(id)
+    console.log('test', id)
     await Plant.destroy({ where: { plant_id: id } })
   }
 }

@@ -31,8 +31,7 @@ export async function putPlantById (req, res) {
 
 export async function deletePlantById (req, res) {
   const { id } = req.params
-  console.log(id)
-  const plant = await PlantServiceInstance.deletePlantById(id)
+  const plant = await PlantServiceInstance.deletePlantById({ id })
   res.status(200).json({
     message: 'La plante a été supprimé.',
     plant
