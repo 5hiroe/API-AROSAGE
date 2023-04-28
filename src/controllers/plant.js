@@ -8,14 +8,14 @@ export async function createPlant (req, res) {
   const userId = req.jwt.data.id
   await PlantValidatorInstance.validate(fields, PlantValidatorInstance.createPlant)
   const plant = await PlantServiceInstance.createPlant({ fields, userId })
-  res.status(200).json({ message: 'La plante est bien enregistrée', plant })
+  res.status(200).json({ message: 'La plante a été créée', plant })
 }
 
 export async function getPlantById (req, res) {
   const { id } = req.params
   const plant = await PlantServiceInstance.getPlantById(id)
   res.status(200).json({
-    message: `Récupération de la plante à l'id : ${plant.plant_id}`,
+    message: 'La plante a été récupérée.',
     plant
   })
 }
@@ -33,18 +33,16 @@ export async function putPlantById (req, res) {
 
 export async function deletePlantById (req, res) {
   const { id } = req.params
-  const plant = await PlantServiceInstance.deletePlantById({ id })
-  res.status(200).json({
-    message: 'La plante a été supprimé.',
-    plant
-  })
+  const userId = req.jwt.data.id
+  await PlantServiceInstance.deletePlantById({ id, userId })
+  res.status(200).json({ message: 'La plante a été supprimée.' })
 }
 
 export async function getAllPlantByUserId (req, res) {
-  const { id } = req.params
+  const { id } = req.jwt.data
   const plant = await PlantServiceInstance.getAllPlantByUserId({ id })
   res.status(200).json({
-    message: 'Liste des plantes OK',
+    message: 'Les plantes ont été récupérées.',
     plant
   })
 }
