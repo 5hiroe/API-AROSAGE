@@ -11,8 +11,9 @@ export async function signup (req, res) {
 }
 
 export async function login (req, res) {
+  const { isBotanist } = req.params
   const { email, password } = req.body
   await AuthValidatorInstance.validate(req.body, AuthValidatorInstance.login)
-  const jwt = await AuthServiceInstance.login({ email, password })
+  const jwt = await AuthServiceInstance.login({ email, password, isBotanist })
   res.status(200).json({ jwt })
 }
