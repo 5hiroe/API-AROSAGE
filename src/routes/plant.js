@@ -6,8 +6,8 @@ const router = express.Router()
 
 router.post('/', jwt.verify, plant.createPlant)
 router.get('/:id', jwt.verify, plant.getPlantById)
-router.put('/update/:id', jwt.verify, plant.putPlantById)
-router.delete('/delete/:id', jwt.verify, plant.deletePlantById)
-router.get('/getAll/:id', jwt.verify, plant.getAllPlantByUserId)
+router.put('/:id', jwt.verify, plant.putPlantById)
+router.delete('/:id', jwt.verify, plant.deletePlantById)
+router.get('/all', jwt.verify, plant.getAllPlantByUserId)
 
 export default router

@@ -5,9 +5,10 @@ const PlantValidatorInstance = new PlantValidator()
 
 export async function createPlant (req, res) {
   const fields = req.body
+  const userId = req.jwt.data.id
   await PlantValidatorInstance.validate(fields, PlantValidatorInstance.createPlant)
-  await PlantServiceInstance.createPlant({ fields })
-  res.status(200).json('La plante est bien enregistrée')
+  const plant = await PlantServiceInstance.createPlant({ fields, userId })
+  res.status(200).json({ message: 'La plante est bien enregistrée', plant })
 }
 
 export async function getPlantById (req, res) {
@@ -22,7 +23,8 @@ export async function getPlantById (req, res) {
 export async function putPlantById (req, res) {
   const { id } = req.params
   const fields = req.body
-  const plant = await PlantServiceInstance.putPlantById({ fields, id })
+  const userId = req.jwt.data.id
+  const plant = await PlantServiceInstance.putPlantById({ fields, id, userId })
   res.status(200).json({
     message: 'La plante a été mise à jour.',
     plant
