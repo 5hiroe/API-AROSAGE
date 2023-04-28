@@ -1,4 +1,3 @@
-// import { sequelize } from '../configurations/database.js'
 import { NotFound, Unauthorized } from '../globals/errors.js'
 import { Plant } from '../models/plant.js'
 
