@@ -1,6 +1,5 @@
 import JsonWebToken from 'jsonwebtoken'
 import { Forbidden } from '../globals/errors.js'
-import { LOCAL } from '../globals/env.js'
 import JWTService from '../services/jwt.js'
 const JWTServiceInstance = new JWTService()
 
@@ -26,10 +25,8 @@ export function verify (req, res, next) {
     data
   }
 
-  if (process.env.NODE_ENV !== LOCAL) {
-    if (!JWTServiceInstance.contain(jwt)) {
-      throw new Forbidden('Session expirée.')
-    }
+  if (!JWTServiceInstance.contain(jwt)) {
+    throw new Forbidden('Session expirée.')
   }
 
   next()
