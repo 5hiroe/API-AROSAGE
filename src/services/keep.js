@@ -1,4 +1,4 @@
-import { NotFound } from '../globals/errors.js'
+import { Conflict, NotFound } from '../globals/errors.js'
 import { Keep } from '../models/keep.js'
 import { Plant } from '../models/plant.js'
 import { User } from '../models/user.js'
@@ -37,6 +37,9 @@ export default class KeepService {
       if (!plant) {
         throw new NotFound('Plante non toruvée.')
       }
+      if (plant.keep_id) {
+        throw new Conflict('La Plante est déjà dans une garde.')
+      }
       await plant.update({ keep_id: keep.keep_id })
       await plant.save()
       plants.push(plant)
@@ -44,5 +47,14 @@ export default class KeepService {
 
     keep.plants = plants
     return keep
+  }
+
+  async getKeepByUser ({ id }) {
+    const user = await User.findByPk(id)
+    if (!user) {
+      throw new NotFound('Utilisateur non trouvé.')
+    }
+    const keepList = await Keep.findAll({ where: { user_id: id } })
+    return keepList
   }
 }
