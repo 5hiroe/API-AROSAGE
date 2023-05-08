@@ -4,7 +4,9 @@ const AuthServiceInstance = new AuthService()
 const AuthValidatorInstance = new AuthValidator()
 
 export async function signup (req, res) {
+  console.log('in signup')
   const fields = req.body
+  console.log(fields)
   await AuthValidatorInstance.validate(req.body, AuthValidatorInstance.signup)
   const jwt = await AuthServiceInstance.signup({ fields })
   res.status(200).json({ jwt })

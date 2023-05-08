@@ -5,7 +5,7 @@ const KeepValidatorInstance = new KeepValidator()
 
 export async function createKeep (req, res) {
   const fields = req.body
-  await KeepValidatorInstance.validate(req.body, KeepValidatorInstance.signup)
-  await KeepServiceInstance.createKeep({ fields })
-  res.status(200).json('La garde a bien été créée')
+  await KeepValidatorInstance.validate(req.body, KeepValidatorInstance.create)
+  const keep = await KeepServiceInstance.createKeep({ fields })
+  res.status(200).json({ message: 'Votre demande de garde a bien été enregistrée.', keep })
 }

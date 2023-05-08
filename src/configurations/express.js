@@ -14,7 +14,7 @@ export async function configure (app) {
 
   app.use('/', authRoutes)
   app.use('/plant/', plantRoutes)
-  app.use('/keep', keepRoutes)
+  app.use('/keep/', keepRoutes)
 
   app.use(errorHandler)
   console.log('Express Initialized.')
