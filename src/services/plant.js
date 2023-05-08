@@ -12,7 +12,7 @@ export default class PlantService {
 
   async createPlant ({ fields, userId }) {
     fields.user_id = userId
-    console.log(fields)
+    fields.status_plant = 'Disponible'
     const plant = await Plant.create(fields)
     return plant
   }
