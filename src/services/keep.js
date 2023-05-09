@@ -3,6 +3,8 @@ import { Keep } from '../models/keep.js'
 import { Plant } from '../models/plant.js'
 import { User } from '../models/user.js'
 import { AVAILABLE } from '../globals/keep_status.js'
+import LocationService from './location.js'
+const LocationServiceInstance = new LocationService()
 
 export default class KeepService {
   constructor () {
@@ -18,21 +20,30 @@ export default class KeepService {
     if (!user) {
       throw new NotFound('Utilisateur non trouvé.')
     }
-    // Fonction pour créer une Adresse  #1
-    // Fonction pour créer une Location  #2
+
+    const address = {
+      address1_address: fields.adress1,
+      address2_address: fields.adress2,
+      city_address: fields.city,
+      postal_code_address: fields.postal_code
+    }
+    // const location = await LocationServiceInstance.createLocation({ fields: address, latitude: fields.latitude, longitude: fields.longitude })
+    const location = await LocationServiceInstance.createLocation({ fields: address, latitude: 43.610769, longitude: 3.876716 })
+
     const keepFields = {
       user_id: userId,
-      location_id: 'LA_LOCALISATION_CREEE', // #2
+      location_id: location.location_id, // #2
       status: AVAILABLE,
-      instructions: fields.instructions,
+      instruction_keep: fields.instruction_keep,
       start_date_keep: fields.start_date_keep,
       end_date_keep: fields.end_date_keep
     }
     const keep = await Keep.create(keepFields)
 
     const plants = []
-
-    for (const plantId in fields.plants) {
+    console.log(fields.plants)
+    for (const plantId of fields.plants) {
+      console.log(plantId)
       const plant = await Plant.findByPk(plantId)
       if (!plant) {
         throw new NotFound('Plante non toruvée.')

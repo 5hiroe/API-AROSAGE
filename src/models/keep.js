@@ -17,7 +17,8 @@ export const Keep = sequelize.define('Keep', {
     allowNull: false
   },
   use_user_id: {
-    type: DataTypes.INTEGER
+    type: DataTypes.INTEGER,
+    allowNull: true
   },
   start_date_keep: {
     type: DataTypes.DATE

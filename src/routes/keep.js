@@ -5,6 +5,6 @@ import * as jwt from '../middlewares/jwt.js'
 const router = express.Router()
 
 router.post('/', jwt.verify, keep.createKeep)
-router.get('/all', jwt.verify, keep.getKeepByUser)
+router.get('/user/all', jwt.verify, keep.getKeepByUser)
 
 export default router
