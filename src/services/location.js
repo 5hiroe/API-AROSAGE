@@ -15,4 +15,24 @@ export default class LocationService {
     const location = await Location.create({ address_id: address.address_id, latitude_location: latitude, longitude_location: longitude })
     return location
   }
+
+  async getAllLocations () {
+    const locationList = await Location.findAll()
+
+    const formattedLocations = []
+
+    for (const location of locationList) {
+      const address = await Address.findByPk(location.address_id)
+      console.log(address)
+      formattedLocations.push({
+        location_id: location.location_id,
+        address_id: location.address_id,
+        latitude_location: location.latitude_location,
+        longitude_location: location.longitude_location,
+        city: address.city_address
+      })
+    }
+
+    return formattedLocations
+  }
 }

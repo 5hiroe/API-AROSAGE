@@ -1,5 +1,7 @@
 import { DataTypes } from 'sequelize'
 import { sequelize } from '../configurations/database.js'
+// import { Plant } from './plant.js'
+// import { Contient } from './contient.js'
 
 export const Keep = sequelize.define('Keep', {
   keep_id: {
@@ -36,3 +38,5 @@ export const Keep = sequelize.define('Keep', {
   tableName: 'KEEP',
   timestamps: false
 })
+
+// Keep.belongsToMany(Plant, { through: Contient, foreignKey: 'keep_id' })

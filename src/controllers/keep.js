@@ -19,3 +19,30 @@ export async function getKeepByUser (req, res) {
     keeps
   })
 }
+
+export async function getKeepById (req, res) {
+  const { id } = req.params
+  const keep = await KeepServiceInstance.getKeepById({ id })
+  res.status(200).json({
+    message: 'La garde a été récupérée.',
+    keep
+  })
+}
+
+export async function getAllKeeps (req, res) {
+  const keeps = await KeepServiceInstance.getAllKeeps()
+  res.status(200).json({
+    message: 'Les gardes ont été récupérées.',
+    keeps
+  })
+}
+
+export async function applyKeep (req, res) {
+  const { id } = req.params
+  const { id: userId } = req.jwt.data
+  const keep = await KeepServiceInstance.applyKeep({ id, userId })
+  res.status(200).json({
+    message: 'Vous avez postulé à la garde.',
+    keep
+  })
+}

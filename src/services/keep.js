@@ -2,8 +2,9 @@ import { Conflict, NotFound } from '../globals/errors.js'
 import { Keep } from '../models/keep.js'
 import { Plant } from '../models/plant.js'
 import { User } from '../models/user.js'
-import { AVAILABLE } from '../globals/keep_status.js'
+import { AVAILABLE, BOOKED } from '../globals/keep_status.js'
 import LocationService from './location.js'
+import { Sequelize } from 'sequelize'
 const LocationServiceInstance = new LocationService()
 
 export default class KeepService {
@@ -33,30 +34,20 @@ export default class KeepService {
     const keepFields = {
       user_id: userId,
       location_id: location.location_id, // #2
-      status: AVAILABLE,
+      status_keep: AVAILABLE,
       instruction_keep: fields.instruction_keep,
       start_date_keep: fields.start_date_keep,
       end_date_keep: fields.end_date_keep
     }
     const keep = await Keep.create(keepFields)
 
-    const plants = []
-    console.log(fields.plants)
     for (const plantId of fields.plants) {
-      console.log(plantId)
       const plant = await Plant.findByPk(plantId)
       if (!plant) {
-        throw new NotFound('Plante non toruvée.')
+        throw new NotFound('Plante non trouvée.')
       }
-      if (plant.keep_id) {
-        throw new Conflict('La Plante est déjà dans une garde.')
-      }
-      await plant.update({ keep_id: keep.keep_id })
-      await plant.save()
-      plants.push(plant)
+      await plant.addKeep(keep)
     }
-
-    keep.plants = plants
     return keep
   }
 
@@ -67,5 +58,79 @@ export default class KeepService {
     }
     const keepList = await Keep.findAll({ where: { user_id: id } })
     return keepList
+  }
+
+  async getKeepById ({ id }) {
+    const keep = await Keep.findOne({
+      where: { keep_id: id },
+      include: {
+        model: Plant,
+        as: 'plants',
+        attributes: ['plant_id'],
+        through: {
+          attributes: []
+        }
+      },
+      attributes: {
+        include: [
+          [
+            Sequelize.fn('COUNT', Sequelize.col('plants.plant_id')),
+            'plant_count'
+          ]
+        ]
+      },
+      group: ['Keep.keep_id', 'plants.plant_id']
+    })
+
+    if (!keep) {
+      throw new NotFound('Garde non trouvée.')
+    }
+    return keep
+  }
+
+  async getAllKeeps () {
+    const keeps = await Keep.findAll({
+      include: {
+        model: Plant,
+        as: 'plants',
+        attributes: ['plant_id'],
+        through: {
+          attributes: []
+        }
+      },
+      attributes: {
+        include: [
+          [
+            Sequelize.fn('COUNT', Sequelize.col('plants.plant_id')),
+            'plant_count'
+          ]
+        ]
+      },
+      group: ['Keep.keep_id', 'plants.plant_id']
+    })
+    return keeps
+  }
+
+  async applyKeep ({ id, userId }) {
+    const keep = await Keep.findByPk(id)
+    if (!keep) {
+      throw new NotFound('Garde non trouvée.')
+    }
+    if (keep.status_keep !== AVAILABLE) {
+      throw new Conflict('Garde déjà prise.')
+    }
+    // if (keep.user_id === userId) {
+    //   throw new Conflict('Vous ne pouvez pas postuler à votre propre garde.')
+    // }
+    const user = await User.findByPk(userId)
+    if (!user) {
+      throw new NotFound('Utilisateur non trouvé.')
+    }
+
+    keep.use_user_id = userId
+    keep.status_keep = BOOKED
+    await keep.save()
+
+    return keep
   }
 }
