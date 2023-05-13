@@ -1,4 +1,5 @@
 import { NotFound, Unauthorized } from '../globals/errors.js'
+import { AVAILABLE } from '../globals/keep_status.js'
 import { Plant } from '../models/plant.js'
 
 export default class PlantService {
@@ -12,7 +13,7 @@ export default class PlantService {
 
   async createPlant ({ fields, userId }) {
     fields.user_id = userId
-    fields.status_plant = 'available'
+    fields.status_plant = AVAILABLE
     console.log(fields)
     const plant = await Plant.create(fields)
     return plant
