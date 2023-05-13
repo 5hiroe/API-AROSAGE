@@ -6,6 +6,7 @@ import authRoutes from '../routes/auth.js'
 import plantRoutes from '../routes/plant.js'
 import uploadRoutes from '../routes/upload.js'
 import downloadRoutes from '../routes/download.js'
+import profileRoutes from '../routes/profile.js'
 
 export async function configure (app) {
   app.use(cors())
@@ -17,6 +18,7 @@ export async function configure (app) {
   app.use('/plant/', plantRoutes)
   app.use('/upload/', uploadRoutes)
   app.use('/download/', downloadRoutes)
+  app.use('/profile/', profileRoutes)
 
   app.use(errorHandler)
   console.log('Express Initialized.')
