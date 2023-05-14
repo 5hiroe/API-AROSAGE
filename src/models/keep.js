@@ -38,5 +38,3 @@ export const Keep = sequelize.define('Keep', {
   tableName: 'KEEP',
   timestamps: false
 })
-
-// Keep.belongsToMany(Plant, { through: Contient, foreignKey: 'keep_id' })

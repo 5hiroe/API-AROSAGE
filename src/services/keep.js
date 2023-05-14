@@ -133,4 +133,28 @@ export default class KeepService {
 
     return keep
   }
+
+  async getAllAppliedKeeps ({ id }) {
+    const keeps = await Keep.findAll({
+      where: { status_keep: BOOKED, use_user_id: id },
+      include: {
+        model: Plant,
+        as: 'plants',
+        attributes: ['plant_id'],
+        through: {
+          attributes: []
+        }
+      },
+      attributes: {
+        include: [
+          [
+            Sequelize.fn('COUNT', Sequelize.col('plants.plant_id')),
+            'plant_count'
+          ]
+        ]
+      },
+      group: ['Keep.keep_id', 'plants.plant_id']
+    })
+    return keeps
+  }
 }

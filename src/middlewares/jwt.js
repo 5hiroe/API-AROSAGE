@@ -25,8 +25,10 @@ export function verify (req, res, next) {
     data
   }
 
-  if (!JWTServiceInstance.contain(jwt)) {
-    throw new Forbidden('Session expirée.')
+  if (process.env.DEBUG !== 'true') {
+    if (!JWTServiceInstance.contain(jwt)) {
+      throw new Forbidden('Session expirée.')
+    }
   }
 
   next()

@@ -5,6 +5,7 @@ export default class PlantValidator extends Validator {
   createPlant = Joi.object({
     name_plant: Joi.string().max(255).required(),
     instructions_plant: Joi.string().max(255).required(),
-    type_plant: Joi.string().max(255).required()
+    type_plant: Joi.string().max(255).required(),
+    picture: Joi.string().max(255)
   })
 }

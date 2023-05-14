@@ -11,7 +11,7 @@ export default class ImageService {
   }
 
   async getUserPicture ({ id }) {
-    const foundedPicture = await Picture.findOne({ where: { user_id: id } })
+    const foundedPicture = await Picture.findOne({ where: { feedback_id: id } })
     if (!foundedPicture) {
       throw NotFound('Aucune image trouvée.')
     }
