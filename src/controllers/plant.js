@@ -49,3 +49,11 @@ export async function getAllPlantByUserId (req, res) {
     plants
   })
 }
+
+export async function getAllPlants (req, res) {
+  const plants = await PlantServiceInstance.getAllPlants()
+  res.status(200).json({
+    message: 'Les plantes ont été récupérées.',
+    plants
+  })
+}

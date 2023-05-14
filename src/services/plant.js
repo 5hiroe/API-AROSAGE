@@ -25,18 +25,25 @@ export default class PlantService {
       where: { plant_id: id },
       include: {
         model: Picture,
-        as: 'ppictures',
-        attributes: ['plant_id'],
-        through: {
-          attributes: []
-        }
-      },
-      group: ['Keep.keep_id', 'plants.plant_id']
+        as: 'Pictures',
+        attributes: ['picture_path']
+      }
     })
     if (!plant) {
       throw new NotFound('La plante n\'existe pas.')
     }
     return plant
+  }
+
+  async getAllPlants () {
+    const plantList = await Plant.findAll({
+      include: {
+        model: Picture,
+        as: 'Pictures',
+        attributes: ['picture_path']
+      }
+    })
+    return plantList
   }
 
   async putPlantById ({ fields, id, userId }) {

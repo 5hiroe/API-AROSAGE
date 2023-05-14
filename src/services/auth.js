@@ -28,10 +28,10 @@ export default class AuthService {
   async login ({ email, password }) {
     const user = await User.findOne({ where: { email_user: email } })
     if (!user) {
-      throw new Conflict('Utilisateur ou mot de passe incorrect.')
+      throw new Conflict('Identifiant ou mot de passe incorrect.')
     }
     if (decrypt(user.password_user) !== password) {
-      throw new Conflict('Utilisateur ou mot de passe incorrect.')
+      throw new Conflict('Identifiant ou mot de passe incorrect.')
     }
     const jwt = await JWTServiceInstance.generate({ id: user.user_id })
     return jwt

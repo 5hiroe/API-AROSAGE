@@ -9,6 +9,8 @@ import downloadRoutes from '../routes/download.js'
 import profileRoutes from '../routes/profile.js'
 import keepRoutes from '../routes/keep.js'
 import feedbackRoutes from '../routes/feedback.js'
+import botanistRoutes from '../routes/botanist.js'
+import adviceRoutes from '../routes/advice.js'
 
 export async function configure (app) {
   app.use(cors())
@@ -23,6 +25,8 @@ export async function configure (app) {
   app.use('/profile/', profileRoutes)
   app.use('/keep/', keepRoutes)
   app.use('/feedback/', feedbackRoutes)
+  app.use('/botanist/', botanistRoutes)
+  app.use('/advice/', adviceRoutes)
 
   app.use(errorHandler)
   console.log('Express Initialized.')
