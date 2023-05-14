@@ -23,7 +23,6 @@ export default class LocationService {
 
     for (const location of locationList) {
       const address = await Address.findByPk(location.address_id)
-      console.log(address)
       formattedLocations.push({
         location_id: location.location_id,
         address_id: location.address_id,

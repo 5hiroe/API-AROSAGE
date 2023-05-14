@@ -13,7 +13,6 @@ export default class FeedbackService {
   }
 
   async createFeedback ({ fields }) {
-    console.log(fields)
     const keep = await Keep.findByPk(fields.keep_id)
     if (!keep) {
       throw new NotFound('La garde n\'existe pas.')

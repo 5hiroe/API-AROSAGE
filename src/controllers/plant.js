@@ -4,11 +4,8 @@ const PlantServiceInstance = new PlantService()
 const PlantValidatorInstance = new PlantValidator()
 
 export async function createPlant (req, res) {
-  console.log('inController')
   const fields = req.body
-  console.log(fields)
   const userId = req.jwt.data.id
-  console.log(userId)
   await PlantValidatorInstance.validate(fields, PlantValidatorInstance.createPlant)
   const plant = await PlantServiceInstance.createPlant({ fields, userId })
   res.status(200).json({ message: 'La plante a été créée', plant })

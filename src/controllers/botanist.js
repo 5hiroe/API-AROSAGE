@@ -6,9 +6,7 @@ const BotanistValidatorInstance = new BotanistValidator()
 const LocationServiceInstance = new LocationService()
 
 export async function signup (req, res) {
-  console.log('in signup')
   const fields = req.body
-  console.log(fields)
   await BotanistValidatorInstance.validate(req.body, BotanistValidatorInstance.signup)
   const jwt = await BotanistServiceInstance.signup({ fields })
   res.status(200).json({ jwt })

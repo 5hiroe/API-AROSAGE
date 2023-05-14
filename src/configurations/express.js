@@ -29,5 +29,4 @@ export async function configure (app) {
   app.use('/advice/', adviceRoutes)
 
   app.use(errorHandler)
-  console.log('Express Initialized.')
 }

@@ -26,14 +26,10 @@ export default class UploadService {
       try {
         fs.unlinkSync(`${PLANT_PICTURES_PATH}/${foundedPicture.picture_path}`)
       } catch (error) {
-        console.log('cant delete file')
+        console.log('Cant delete file')
       }
     }
-    console.log('picture Creating')
-    console.log(picture)
     const createdPicture = await Picture.create({ picture_path: picture.path, plant_id: id })
-    console.log('picture Created')
-    console.log(createdPicture)
     return createdPicture
   }
 }

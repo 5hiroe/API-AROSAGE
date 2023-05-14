@@ -5,7 +5,6 @@ const FeedbackValidatorInstance = new FeedbackValidator()
 
 export async function createFeedback (req, res) {
   const fields = req.body
-  console.log(fields)
   FeedbackValidatorInstance.validate(req.body, FeedbackValidatorInstance.create)
   const feedback = await FeedbackServiceInstance.createFeedback({ fields })
   res.status(200).json({ message: 'Votre feedback a bien été enregistré.', feedback })
