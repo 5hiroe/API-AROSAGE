@@ -1,6 +1,6 @@
 import { Op } from 'sequelize'
 import { User } from '../models/user.js'
-import { Conflict } from '../globals/errors.js'
+import { Conflict, NotFound } from '../globals/errors.js'
 import JWTService from './jwt.js'
 import { encrypt, decrypt } from '../helpers/encryption.js'
 const JWTServiceInstance = new JWTService()
@@ -35,6 +35,14 @@ export default class AuthService {
     }
     const jwt = await JWTServiceInstance.generate({ id: user.user_id })
     return jwt
+  }
+
+  async getUser ({ id }) {
+    const user = await User.findByPk(id)
+    if (!user) {
+      throw new NotFound('Utilisateur introuvable.')
+    }
+    return user
   }
 
   logout ({ jwt }) {

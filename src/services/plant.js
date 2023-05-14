@@ -1,5 +1,7 @@
 import { NotFound, Unauthorized } from '../globals/errors.js'
+import { AVAILABLE } from '../globals/keep_status.js'
 import { Plant } from '../models/plant.js'
+import { Picture } from '../models/picture.js'
 
 export default class PlantService {
   constructor () {
@@ -12,13 +14,25 @@ export default class PlantService {
 
   async createPlant ({ fields, userId }) {
     fields.user_id = userId
-    fields.status_plant = 'Disponible'
+    fields.status_plant = AVAILABLE
+    console.log(fields)
     const plant = await Plant.create(fields)
     return plant
   }
 
   async getPlantById (id) {
-    const plant = await Plant.findByPk(id)
+    const plant = await Plant.find({
+      where: { plant_id: id },
+      include: {
+        model: Picture,
+        as: 'ppictures',
+        attributes: ['plant_id'],
+        through: {
+          attributes: []
+        }
+      },
+      group: ['Keep.keep_id', 'plants.plant_id']
+    })
     if (!plant) {
       throw new NotFound('La plante n\'existe pas.')
     }
@@ -50,7 +64,15 @@ export default class PlantService {
   }
 
   async getAllPlantByUserId ({ id }) {
-    const plantList = await Plant.findAll({ where: { user_id: id } })
+    const plantList = await Plant.findAll({
+      where: { user_id: id },
+      include: {
+        model: Picture,
+        as: 'Pictures',
+        attributes: ['picture_path']
+      }
+
+    })
     return plantList
   }
 }

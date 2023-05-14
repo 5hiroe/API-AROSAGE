@@ -110,7 +110,7 @@ export default class JWTService {
   isLimitReached (id) {
     let total = 0
     for (const jwt of this.jwts) {
-      if (jwt.id.equals(id.toString())) {
+      if (jwt.id === id.toString()) {
         total += 1
       }
     }

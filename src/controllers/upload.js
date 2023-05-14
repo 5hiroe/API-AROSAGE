@@ -4,15 +4,23 @@ const UploadHelperInstance = new UploadHelper()
 const UploadServiceInstance = new UploadService()
 
 export async function userPicture (req, res) {
-  const { id } = req.jwt.data
+  console.log('userPicture')
+  const { id } = req.params
+  console.log('id', id)
   const picture = await UploadHelperInstance.uploadUserPicture({ req, res })
-  const userPicture = await UploadServiceInstance.userPicture({ picture, id })
-  return res.status(200).json({ userPicture })
+  console.log('picture', picture.toString())
+  const image = await UploadServiceInstance.userPicture({ picture, id })
+  console.log('image', image)
+  return res.status(200).json({ message: 'Image mise en ligne avec succès.', image })
 }
 
 export async function plantPicture (req, res) {
+  console.log('plantPicture')
   const { id } = req.params
+  console.log('id', id)
   const picture = await UploadHelperInstance.uploadPlantPicture({ req, res })
-  const plantPicture = await UploadServiceInstance.plantPicture({ picture, id })
-  return res.status(200).json({ plantPicture })
+  console.log('picture', picture.toString())
+  const image = await UploadServiceInstance.plantPicture({ picture, id })
+  console.log('image', image)
+  return res.status(200).json({ message: 'Image mise en ligne avec succès.', image })
 }
