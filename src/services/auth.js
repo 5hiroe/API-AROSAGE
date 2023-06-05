@@ -48,4 +48,21 @@ export default class AuthService {
   logout ({ jwt }) {
     JWTServiceInstance.remove({ jwt })
   }
+
+  async updateUser ({ fields, id }) {
+    const user = await User.findByPk(id)
+    if (!user) {
+      throw new NotFound('Utilisateur introuvable.')
+    }
+    await user.update({ ...fields })
+    return user
+  }
+
+  async deleteUser ({ id }) {
+    const user = await User.findByPk(id)
+    if (!user) {
+      throw new NotFound('Utilisateur introuvable.')
+    }
+    await user.destroy()
+  }
 }

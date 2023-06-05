@@ -13,6 +13,8 @@ export default class AuthValidator extends Validator {
     birthdate_user: Joi.date().required(),
     email_user: Joi.string().email().required(),
     phone_user: Joi.string().min(10).max(10).required(),
-    password_user: Joi.string().min(8).required()
+    password_user: Joi.string().min(8).required(),
+    cgu_user: Joi.boolean().required(),
+    newsletter_user: Joi.boolean().required()
   })
 }

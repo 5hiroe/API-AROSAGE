@@ -29,3 +29,17 @@ export async function getLocations (req, res) {
   const locations = await LocationServiceInstance.getAllLocations()
   res.status(200).json({ message: 'Adresses récupérées', locations })
 }
+
+export async function updateUser (req, res) {
+  const fields = req.body
+  const { id } = req.jwt.data
+  await AuthValidatorInstance.validate(req.body, AuthValidatorInstance.putUser)
+  const user = await AuthServiceInstance.updateUser({ fields, id })
+  res.status(200).json({ message: 'Utilisateur mis à jour', user })
+}
+
+export async function deleteUser (req, res) {
+  const { id } = req.jwt.data
+  await AuthServiceInstance.deleteUser({ id })
+  res.status(200).json({ message: 'Utilisateur supprimé' })
+}
