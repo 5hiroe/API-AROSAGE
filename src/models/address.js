@@ -12,7 +12,8 @@ export const Address = sequelize.define('Address', {
     type: DataTypes.STRING(255)
   },
   address2_address: {
-    type: DataTypes.STRING(255)
+    type: DataTypes.STRING(255),
+    allowNull: true
   },
   city_address: {
     type: DataTypes.STRING(255)

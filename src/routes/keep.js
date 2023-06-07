@@ -10,5 +10,6 @@ router.get('/all', jwt.verify, keep.getAllKeeps)
 router.get('/applied', jwt.verify, keep.appliedKeeps)
 router.put('/apply/:id', jwt.verify, keep.applyKeep)
 router.get('/:id', jwt.verify, keep.getKeepById)
+router.get('/all/except', jwt.verify, keep.getAllKeepsExceptUser)
 
 export default router

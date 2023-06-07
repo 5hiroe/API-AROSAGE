@@ -55,3 +55,12 @@ export async function appliedKeeps (req, res) {
     keeps
   })
 }
+
+export async function getAllKeepsExceptUser (req, res) {
+  const { id } = req.jwt.data
+  const keeps = await KeepServiceInstance.getAllKeepsExceptUser({ id })
+  res.status(200).json({
+    message: 'Les gardes ont été récupérées.',
+    keeps
+  })
+}
