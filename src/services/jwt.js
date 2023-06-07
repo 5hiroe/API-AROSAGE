@@ -65,7 +65,7 @@ export default class JWTService {
     // The index of the oldest jwt to remove.
     let index
     for (const i in this.jwts) {
-      if (this.jwts[i].id.equals(id)) {
+      if (this.jwts[i].id === id) {
         // As oldest is undefined at the beginning, it will take first value.
         if (!oldest) {
           oldest = this.jwts[i].date
@@ -118,7 +118,7 @@ export default class JWTService {
   }
 
   removeAll (id) {
-    const activesJWT = this.jwts.filter(jwt => jwt.id.equals(id))
+    const activesJWT = this.jwts.filter(jwt => jwt.id === id)
     for (const jwt of activesJWT) {
       let index = -1
       for (const i in this.jwts) {
