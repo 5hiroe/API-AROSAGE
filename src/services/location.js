@@ -1,3 +1,4 @@
+import axios from 'axios'
 import { Address } from '../models/address.js'
 import { Location } from '../models/location.js'
 
@@ -10,9 +11,18 @@ export default class LocationService {
     LocationService.instance = this
   }
 
-  async createLocation ({ fields, latitude, longitude }) {
+  async createLocation ({ fields }) {
     const address = await Address.create({ ...fields })
-    const location = await Location.create({ address_id: address.address_id, latitude_location: latitude, longitude_location: longitude })
+    const formatedAdress = `${fields.address1_address} ${fields.address2_address} ${fields.postal_code_address} ${fields.city_address}`
+    const request = `https://api-adresse.data.gouv.fr/search/?q=${formatedAdress}&limit=1`
+    const coordinates = await axios.get(request)
+      .then(response => {
+        return response.data.features[0].geometry.coordinates
+      })
+      .catch(error => {
+        console.log(error)
+      })
+    const location = await Location.create({ address_id: address.address_id, latitude_location: coordinates[1], longitude_location: coordinates[0] })
     return location
   }
 
