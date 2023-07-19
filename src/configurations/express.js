@@ -25,26 +25,26 @@ export async function configure (app) {
     message: 'You exceed 100 requests in 15 minutes',
     headers: true // limit each IP to 100 requests per windowMs
   }))
-  app.use(helmet())
-  app.use(helmet.hsts({
-    maxAge: 31536000,
-    includeSubDomains: true,
-    preload: true
-  }))
-  app.use(helmet.frameguard({
-    action: 'deny'
-  }))
-  app.use(helmet.xssFilter())
-  app.use(helmet.noSniff())
-  app.use(helmet.contentSecurityPolicy({
-    directives: {
-      defaultSrc: ["'self'"],
-      styleSrc: ["'self'", ''],
-      fontSrc: ["'self'", ''],
-      scriptSrc: ["'self'", ''],
-      imgSrc: ["'self'"]
-    }
-  }))
+  // app.use(helmet())
+  // app.use(helmet.hsts({
+  //   maxAge: 31536000,
+  //   includeSubDomains: true,
+  //   preload: true
+  // }))
+  // app.use(helmet.frameguard({
+  //   action: 'deny'
+  // }))
+  // app.use(helmet.xssFilter())
+  // app.use(helmet.noSniff())
+  // app.use(helmet.contentSecurityPolicy({
+  //   directives: {
+  //     defaultSrc: ["'self'"],
+  //     styleSrc: ["'self'", ''],
+  //     fontSrc: ["'self'", ''],
+  //     scriptSrc: ["'self'", ''],
+  //     imgSrc: ["'self'"]
+  //   }
+  // }))
   app.use('/', authRoutes)
   app.use('/plant/', plantRoutes)
   app.use('/upload/', uploadRoutes)

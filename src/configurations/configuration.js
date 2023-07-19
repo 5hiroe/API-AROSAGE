@@ -6,7 +6,9 @@ import { Contient } from '../models/contient.js'
 import { Picture } from '../models/picture.js'
 import { Feedback } from '../models/feedback.js'
 
-export async function configure (app) {
+export async function 
+
+configure (app) {
   await express.configure(app)
   await sequelize.configure()
 
