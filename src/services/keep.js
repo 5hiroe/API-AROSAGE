@@ -26,15 +26,15 @@ export default class KeepService {
     if (!user) {
       throw new NotFound('Utilisateur non trouvé.')
     }
-
+    console.log(fields)
     const address = {
-      address1_address: fields.adress1,
-      address2_address: fields.adress2,
+      address1_address: fields.address1,
+      address2_address: fields.address2,
       city_address: fields.city,
       postal_code_address: fields.postal_code
     }
     // const location = await LocationServiceInstance.createLocation({ fields: address, latitude: fields.latitude, longitude: fields.longitude })
-    const location = await LocationServiceInstance.createLocation({ fields: address, latitude: 43.610769, longitude: 3.876716 })
+    const location = await LocationServiceInstance.createLocation({ fields: address })
 
     const keepFields = {
       user_id: userId,
@@ -98,7 +98,7 @@ export default class KeepService {
       include: {
         model: Plant,
         as: 'plants',
-        attributes: ['plant_id'],
+        attributes: ['plant_id', 'name_plant', 'type_plant', 'instructions_plant'],
         through: {
           attributes: []
         }
@@ -156,6 +156,30 @@ export default class KeepService {
         model: Plant,
         as: 'plants',
         attributes: ['plant_id'],
+        through: {
+          attributes: []
+        }
+      },
+      attributes: {
+        include: [
+          [
+            Sequelize.fn('COUNT', Sequelize.col('plants.plant_id')),
+            'plant_count'
+          ]
+        ]
+      },
+      group: ['Keep.keep_id', 'plants.plant_id']
+    })
+    return keeps
+  }
+
+  async getAllKeepsExceptUser ({ id }) {
+    const keeps = await Keep.findAll({
+      where: { status_keep: AVAILABLE, user_id: { [Sequelize.Op.ne]: id } },
+      include: {
+        model: Plant,
+        as: 'plants',
+        attributes: ['plant_id', 'name_plant', 'type_plant', 'instructions_plant'],
         through: {
           attributes: []
         }

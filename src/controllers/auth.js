@@ -30,3 +30,9 @@ export async function getLocations (req, res) {
   const locations = await LocationServiceInstance.getAllLocations()
   res.status(200).json({ message: 'Adresses récupérées', locations })
 }
+
+export async function logout (req, res) {
+  const { id } = req.jwt.data
+  const jwt = await AuthServiceInstance.logout({ id })
+  res.status(200).json({ message: 'Utilisateur déconnecté', jwt })
+}

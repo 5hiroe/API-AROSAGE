@@ -28,6 +28,12 @@ export const User = sequelize.define('User', {
   },
   picture_path_user: {
     type: DataTypes.STRING(255)
+  },
+  cgu_user: {
+    type: DataTypes.BOOLEAN
+  },
+  newsletter_user: {
+    type: DataTypes.BOOLEAN
   }
 }, {
   tableName: 'USER',

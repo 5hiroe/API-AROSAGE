@@ -8,5 +8,6 @@ router.post('/signup', auth.signup)
 router.post('/login', auth.login)
 router.get('/user', jwt.verify, auth.getUser)
 router.get('/locations', jwt.verify, auth.getLocations)
+router.post('/logout', jwt.verify, auth.logout)
 
 export default router

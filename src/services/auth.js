@@ -47,7 +47,12 @@ export default class AuthService {
     return user
   }
 
-  logout ({ jwt }) {
-    JWTServiceInstance.remove({ jwt })
+  async logout ({ id }) {
+    const user = await User.findByPk(id)
+    if (!user) {
+      throw new NotFound('Utilisateur introuvable.')
+    }
+    const jwt = JWTServiceInstance.removeAll(user.user_id)
+    return jwt
   }
 }
