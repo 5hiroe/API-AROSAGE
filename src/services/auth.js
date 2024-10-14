@@ -22,7 +22,8 @@ export default class AuthService {
     fields.password_user = encrypt(fields.password_user)
     const user = await User.create({ ...fields })
     const jwt = await JWTServiceInstance.generate({ id: user.user_id })
-    return jwt
+    const data = { jwt, id: user.user_id }
+    return data
   }
 
   async login ({ email, password }) {
@@ -34,7 +35,8 @@ export default class AuthService {
       throw new Conflict('Identifiant ou mot de passe incorrect.')
     }
     const jwt = await JWTServiceInstance.generate({ id: user.user_id })
-    return jwt
+    const data = { jwt, id: user.user_id }
+    return data
   }
 
   async getUser ({ id }) {

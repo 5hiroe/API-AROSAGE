@@ -5,7 +5,12 @@ import { User } from '../models/user.js'
 import { AVAILABLE, BOOKED } from '../globals/keep_status.js'
 import LocationService from './location.js'
 import { Sequelize } from 'sequelize'
+import { Firestore } from '@google-cloud/firestore'
 const LocationServiceInstance = new LocationService()
+const firestore = new Firestore({
+  projectId: 'arosaje-a8877',
+  keyFilename: '../arosaje-a8877-firebase-adminsdk-iwje8-9456006420.json'
+})
 
 export default class KeepService {
   constructor () {
@@ -126,6 +131,16 @@ export default class KeepService {
     if (!user) {
       throw new NotFound('Utilisateur non trouvé.')
     }
+
+    const conversationRef = firestore.collection('conversations').doc()
+    const conversationId = conversationRef.id
+
+    await conversationRef.set({
+      id: conversationId,
+      members: [userId, keep.user_id],
+      lastMessage: '',
+      timestamp: Firestore.Timestamp.now()
+    })
 
     keep.use_user_id = userId
     keep.status_keep = BOOKED

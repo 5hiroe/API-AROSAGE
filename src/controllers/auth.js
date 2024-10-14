@@ -9,14 +9,15 @@ export async function signup (req, res) {
   const fields = req.body
   await AuthValidatorInstance.validate(req.body, AuthValidatorInstance.signup)
   const jwt = await AuthServiceInstance.signup({ fields })
-  res.status(200).json({ jwt })
+  res.status(200).json({ jwt: jwt.jwt, id: jwt.id.toString() })
 }
 
 export async function login (req, res) {
   const { email, password } = req.body
   await AuthValidatorInstance.validate(req.body, AuthValidatorInstance.login)
   const jwt = await AuthServiceInstance.login({ email, password })
-  res.status(200).json({ jwt })
+  console.log(jwt)
+  res.status(200).json({ jwt: jwt.jwt, id: jwt.id.toString() })
 }
 
 export async function getUser (req, res) {
